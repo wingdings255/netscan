@@ -1,14 +1,56 @@
-*{
+* {
     color: black;
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
 }
-article{
-  border: solid black;
-  padding: 3px;
+
+body {
+    background-color: rgba(57, 76, 92, 0.918);
 }
-#online{
+
+h1 {
+    color: white;
+}
+
+article {
+    border: solid black;
+    padding: 3px;
+}
+
+header {
+    color: white;
+}
+
+nav {
+    position: sticky;
+    text-align: left;
+    overflow: auto;
+    background-color: #202020;
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    padding: 5px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    background-color: rgba(57, 76, 92, 0.918);
+    margin: .5em;
+    padding: 5px;
+}
+
+nav ul {
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+#online {
     background-color: #c8e6c9;
 }
-#offline{
+
+#offline {
     background-color: #ef9a9a;
 }
