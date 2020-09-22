@@ -2,6 +2,7 @@ import socket
 import os
 import json
 import subprocess
+import time
 from datetime import datetime
 
 # Vars
@@ -10,15 +11,29 @@ netmask = '24'
 global iplst
 iplst = []
 alive = []
+logging = False
 
 if netmask == '24':
     netrange = '255'
 
-print("[*]: Scanner starting up")
+class eventStream:
+    # Logging class object
+    def outCons(msg):
+        # prints log to console
+        print('[datetime.now()]::[' + msg + ']')
+    def outFile(msg):
+        # Prints log to log file
+    def log(msg):
+        if logging = True:
+            outCons(msg)
+        else:
+            outFile(msg)    
+
 
 
 def main():
-    print("[+]: Generating the host list")
+    # print("[+]: Generating the host list")
+    eventStream.log("Generating the host list")
     for i in range(1, int(netrange)):
         ip = netid + str(i)
         iplst.append(ip)
