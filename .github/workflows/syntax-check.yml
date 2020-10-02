@@ -1,0 +1,23 @@
+name: Syntax Check
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "**.py"
+
+jobs:
+  Flake:
+    name: Check Python Syntax with Flake
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v2
+        with:
+            python-version: "3.8"
+      - name: Run flake8
+        uses: julianwachholz/flake8-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
