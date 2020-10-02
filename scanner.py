@@ -1,9 +1,11 @@
-import socket
-import os
-import json
+#!/bin/env python3
 import subprocess
-import time
 from datetime import datetime
+
+# Imports to use later
+# import socket
+# import os
+# import json
 
 # Vars
 netid = '192.168.20.'
@@ -16,24 +18,12 @@ logging = False
 if netmask == '24':
     netrange = '255'
 
-class eventStream:
-    # Logging class object
-    def outCons(msg):
-        # prints log to console
-        print('[datetime.now()]::[' + msg + ']')
-    def outFile(msg):
-        # Prints log to log file
-    def log(msg):
-        if logging = True:
-            outCons(msg)
-        else:
-            outFile(msg)    
-
+# TODO: Creat logging object here
 
 
 def main():
     # print("[+]: Generating the host list")
-    eventStream.log("Generating the host list")
+    print("Generating the host list")
     for i in range(1, int(netrange)):
         ip = netid + str(i)
         iplst.append(ip)
@@ -61,8 +51,10 @@ def getalive(currentip, iplst):
     elif test == '1':
         print("[!]: Host isnt alive")
 
+
 def scan(currentip):
-    print("")    
+    print("")
+
 
 def getbanner(currentip):
     print("[*]: Getting banner for" + currentip)
