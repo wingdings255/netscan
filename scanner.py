@@ -1,12 +1,13 @@
-# import socket
 # import os
 # import json
+import socket
 import ipcalc
 import subprocess
-from datetime import datetime
+import time
 
 # Vars
 netid = '192.168.1.0/24'  # For testing
+ports = ['20', '22', '21', '80', '443']
 global iplst
 iplst = []
 alive = []
@@ -15,12 +16,14 @@ alive = []
 def main():
     iplst = ipcalc.Network(netid)
     print("[+]:: IP list contains " + str(len(iplst)) + " hosts")
-    t1 = datetime.now()
+    t1 = time.time()
     for i in iplst:
         getAlive(i)
-    t2 = datetime.now()
-    time = t2 - t1
-    print("[!]:: Scan took " + time)
+    t2 = time.time()
+    tEnd = t2 - t1
+    t = round(tEnd, 3)
+    print("[!]:: Scan took " + str(t) + " seconds")
+    print("[+]:: Found " + str(len(alive)) + "/" + str(len(iplst)) + " alive hosts")
 
 
 # Tests to see if host is alive with ping
@@ -33,6 +36,13 @@ def getAlive(host):
         print(" ALIVE ]")
     elif test == 1:
         print(" DEAD ]")
+
+
+def scanner(host):
+    addr = str(host)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    for i in ports:
+        s.connect(addr, i)
 
 
 main()
