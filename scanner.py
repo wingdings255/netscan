@@ -1,3 +1,4 @@
+#!/bin/env python3
 # import os
 # import json
 import socket
@@ -43,6 +44,7 @@ def scanner(host):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     for i in ports:
         s.connect(addr, i)
+
 
 
 main()
