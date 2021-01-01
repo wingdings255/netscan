@@ -1,63 +1,50 @@
 #!/bin/env python3
-import subprocess
-from datetime import datetime
-
-# Imports to use later
-# import socket
 # import os
 # import json
+import socket
+import ipcalc
+import subprocess
+import time
 
 # Vars
-netid = '192.168.20.'
-netmask = '24'
+netid = '192.168.1.0/24'  # For testing
+ports = ['20', '22', '21', '80', '443']
 global iplst
 iplst = []
 alive = []
-logging = False
-
-if netmask == '24':
-    netrange = '255'
-
-# TODO: Creat logging object here
 
 
 def main():
-    # print("[+]: Generating the host list")
-    print("Generating the host list")
-    for i in range(1, int(netrange)):
-        ip = netid + str(i)
-        iplst.append(ip)
-    print("[+]: IP list contains " + str(len(iplst)) + " hosts")
-    scanner(iplst)
-
-
-def scanner(iplst):
-    t1 = datetime.now()
+    iplst = ipcalc.Network(netid)
+    print("[+]:: IP list contains " + str(len(iplst)) + " hosts")
+    t1 = time.time()
     for i in iplst:
-        currentip = i
-        getalive(currentip, iplst)
-        print("[+]: Found " + str(len(alive)) + " alive hosts")
-    t2 = datetime.now()
-    time = t2 - t1
-    print("[?]: Scan took [" + str(time) + "] to scan " + str(len(iplst)) + " hosts")
+        getAlive(i)
+    t2 = time.time()
+    tEnd = t2 - t1
+    t = round(tEnd, 3)
+    print("[!]:: Scan took " + str(t) + " seconds")
+    print("[+]:: Found " + str(len(alive)) + "/" + str(len(iplst)) + " alive hosts")
 
 
-def getalive(currentip, iplst):
-    # print("[*]: Scanning " + str(currentip))
-    test = subprocess.call(['ping', '-n', '1', currentip])
-    if test == '0':
-        alive.append(currentip)
-        print("[+]: " + currentip + " is alive")
-    elif test == '1':
-        print("[!]: Host isnt alive")
+# Tests to see if host is alive with ping
+def getAlive(host):
+    addr = str(host)
+    print("[+]:: Checking " + addr, end='-->STATUS::[')
+    test = subprocess.call(['ping', '-c', '1', addr], stdout=subprocess.DEVNULL)
+    if test == 0:
+        alive.append(host)  # NOTE: Saved as [IP('192.168.0.1'),]
+        print(" ALIVE ]")
+    elif test == 1:
+        print(" DEAD ]")
 
 
-def scan(currentip):
-    print("")
+def scanner(host):
+    addr = str(host)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    for i in ports:
+        s.connect(addr, i)
 
-
-def getbanner(currentip):
-    print("[*]: Getting banner for" + currentip)
 
 
 main()
